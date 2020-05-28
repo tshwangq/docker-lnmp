@@ -4,7 +4,7 @@ services:
   php-fpm:
     build: ./build/php-fpm
     volumes:
-      - ../:/var/www
+      - ${SRC_PATH}:${DEST_PATH}
     expose:
       - "9000"
     links:
@@ -15,8 +15,8 @@ services:
   nginx:
     build: ./build/nginx
     volumes:
-      - ./logs/nginx/:/var/log/nginx
-      - ../:/var/www
+      - ${LOGS_PATH}/nginx/:/var/log/nginx
+      - ${SRC_PATH}:${DEST_PATH}
       - ./data/nginx/sites-available:/etc/nginx/sites-available
     ports:
       - "4380:80"
@@ -33,7 +33,9 @@ services:
   mysql:
     build: ./build/mysql
     volumes:
-      - ./data/mysql:/var/lib/mysql
+      - ${VOLUME_PATH}:/var/lib/mysql
+    ports:
+      - "3306:3306"
     expose:
       - "3306"
     environment:
@@ -46,12 +48,27 @@ services:
   application:
     build: ./build/application
 
+  mysql-cron-backup:
+    image: fradelg/mysql-cron-backup
+    depends_on:
+      - mysql
+    volumes:
+      - ${VOLUME_PATH}/backup:/backup
+    environment:
+      - MYSQL_HOST=mysql
+      - MYSQL_USER=root
+      - MYSQL_PASS=${DB_ROOT_PASS}
+      - MAX_BACKUPS=15
+      - INIT_BACKUP=0
+      # Every day at 03:00
+      - CRON_TIME=0 3 * * *
+    restart: unless-stopped 
 
   ### Workspace Utilities Container
   workspace:
     build: ./build/workspace
     volumes:
-      - ../:/var/www
+      - ${SRC_PATH}:${DEST_PATH}
     links:
       - mysql
     tty: true

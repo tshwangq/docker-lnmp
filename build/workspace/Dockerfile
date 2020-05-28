@@ -25,18 +25,18 @@ RUN apt-get update && apt-get install -y \
 RUN add-apt-repository -y \
     ppa:ondrej/php
 
-# Install PHP-CLI 7.1, some PHP extentions and some useful Tools with APT
+# Install PHP-CLI 7.3, some PHP extentions and some useful Tools with APT
 RUN apt-get update && apt-get install -y --force-yes \
-        php7.1-cli \
-        php7.1-common \
-        php7.1-curl \
-        php7.1-json \
-        php7.1-xml \
-        php7.1-mbstring \
-        php7.1-mcrypt \
-        php7.1-mysql \
-        php7.1-zip \
-        php7.1-gd \
+        php7.3-cli \
+        php7.3-common \
+        php7.3-curl \
+        php7.3-json \
+        php7.3-xml \
+        php7.3-mbstring \
+#        php7.3-mcrypt \
+        php7.3-mysql \
+        php7.3-zip \
+        php7.3-gd \
         php-memcached \
         php-xdebug \
         git \

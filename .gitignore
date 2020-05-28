@@ -1,3 +1,4 @@
 /data/mysql
 *~
 /logs
+/data/nginx/sites-available/
