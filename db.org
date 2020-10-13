@@ -1,0 +1,79 @@
+#+TITLE: 运维
+
+* hytltec db
+   :PROPERTIES:
+   :CATEGORY: test
+   :header-args: :engine mysql
+   :header-args+: :dbhost 127.0.0.1
+   :header-args+: :dbport 3306
+   :header-args+: :database hytltec
+   :header-args+: :dbuser root
+   :header-args+: :dbpassword qDnvZFKQkujwzNj
+   :header-args+: :cmdline --protocol=tcp
+   :header-args+: :exports both
+   :END:
+
+  healthy/ bQoHHPp8eLCJ)pmAbh
+** 基础
+#+name: 显示数据库
+#+BEGIN_SRC sql
+show tables;
+#+END_SRC
+
+#+RESULTS: 显示数据库
+|---|
+
+
+*** 用户
+#+name: 用户表定义
+#+BEGIN_SRC sql
+describe tp_users;
+#+END_SRC
+
+
+#+name: 查询用户
+#+BEGIN_SRC sql
+select user_id,password,mobile,token,nickname,reg_time, distribut_level, platform , invite_code
+from tp_users where nickname like '刘文%' order by user_id desc limit 0,15 ;
+#+END_SRC
+
+
+#+name: 按邀请查询用户
+#+BEGIN_SRC sql
+select user_id,nickname,first_leader,second_leader,third_leader from  tp_users where is_distribut=1
+#+END_SRC
+
+
+#+name: 删除用户
+#+BEGIN_SRC sql
+delete from tp_users where user_id = 110195
+#+END_SRC
+
+
+** 商品
+*** 评论
+#+name: 评论查询
+#+BEGIN_SRC sql
+  select * from tp_comment order by comment_id desc limit 0, 5;
+#+END_SRC
+
+
+
+** 系统
+
+#+name: 菜单
+#+BEGIN_SRC sql 
+
+select * from tp_system_menu ;
+#+END_SRC
+
+
+** 订单
+
+#+name: 清理订单
+#+BEGIN_SRC sql
+delete from s_order;
+delete from s_order_detail;
+delete from s_order_status_history;
+#+END_SRC
+

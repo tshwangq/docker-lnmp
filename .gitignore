@@ -1,4 +1,6 @@
 /data/mysql
 *~
+*\#
 /logs
+*.gz
 /data/nginx/sites-available/
