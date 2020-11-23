@@ -21,7 +21,63 @@ show tables;
 #+END_SRC
 
 #+RESULTS: 显示数据库
-|---|
+| Tables_in_drugstore         |
+|-----------------------------|
+| medicine                    |
+| s_admin                     |
+| s_answer                    |
+| s_app_center_nav            |
+| s_app_home_nav              |
+| s_article                   |
+| s_article_category          |
+| s_attachment                |
+| s_brand                     |
+| s_brand_category            |
+| s_brand_category_join       |
+| s_cart                      |
+| s_config                    |
+| s_custom_view               |
+| s_express                   |
+| s_goods                     |
+| s_goods_browse              |
+| s_goods_category            |
+| s_goods_category_join       |
+| s_goods_comments            |
+| s_goods_content_app         |
+| s_goods_favor               |
+| s_goods_photo               |
+| s_goods_spec_base           |
+| s_goods_spec_type           |
+| s_goods_spec_value          |
+| s_link                      |
+| s_message                   |
+| s_navigation                |
+| s_order                     |
+| s_order_address             |
+| s_order_aftersale           |
+| s_order_detail              |
+| s_order_extraction_code     |
+| s_order_fictitious_value    |
+| s_order_goods_inventory_log |
+| s_order_status_history      |
+| s_pay_log                   |
+| s_pay_log_value             |
+| s_payment                   |
+| s_plugins                   |
+| s_power                     |
+| s_refund_log                |
+| s_region                    |
+| s_role                      |
+| s_role_power                |
+| s_screening_price           |
+| s_search_history            |
+| s_slide                     |
+| s_user                      |
+| s_user_address              |
+| s_user_integral_log         |
+| s_warehouse                 |
+| s_warehouse_goods           |
+| s_warehouse_goods_spec      |
 
 
 *** 用户
@@ -58,6 +114,390 @@ delete from tp_users where user_id = 110195
 #+END_SRC
 
 
+
+** 系统
+
+#+name: 菜单
+#+BEGIN_SRC sql 
+
+select * from tp_system_menu ;
+#+END_SRC
+
+
+** 订单
+
+#+name: 清理订单
+#+BEGIN_SRC sql
+delete from s_order;
+delete from s_order_detail;
+delete from s_order_status_history;
+#+END_SRC
+
+
+
+
+* drugstore db
+   :PROPERTIES:
+   :CATEGORY: test
+   :header-args: :engine mysql
+   :header-args+: :dbhost 127.0.0.1
+   :header-args+: :dbport 3306
+   :header-args+: :database drugstore
+   :header-args+: :dbuser root
+   :header-args+: :dbpassword qDnvZFKQkujwzNj
+   :header-args+: :cmdline --protocol=tcp
+   :header-args+: :exports both
+   :END:
+
+  healthy/ bQoHHPp8eLCJ)pmAbh
+** 基础
+#+name: show tables
+#+BEGIN_SRC sql
+show tables;
+#+END_SRC
+
+#+RESULTS: show tables
+| Tables_in_drugstore         |
+|-----------------------------|
+| medicine                    |
+| s_admin                     |
+| s_answer                    |
+| s_app_center_nav            |
+| s_app_home_nav              |
+| s_article                   |
+| s_article_category          |
+| s_attachment                |
+| s_brand                     |
+| s_brand_category            |
+| s_brand_category_join       |
+| s_cart                      |
+| s_config                    |
+| s_custom_view               |
+| s_express                   |
+| s_goods                     |
+| s_goods_browse              |
+| s_goods_category            |
+| s_goods_category_join       |
+| s_goods_comments            |
+| s_goods_content_app         |
+| s_goods_favor               |
+| s_goods_photo               |
+| s_goods_spec_base           |
+| s_goods_spec_type           |
+| s_goods_spec_value          |
+| s_link                      |
+| s_message                   |
+| s_navigation                |
+| s_order                     |
+| s_order_address             |
+| s_order_aftersale           |
+| s_order_detail              |
+| s_order_extraction_code     |
+| s_order_fictitious_value    |
+| s_order_goods_inventory_log |
+| s_order_status_history      |
+| s_pay_log                   |
+| s_pay_log_value             |
+| s_payment                   |
+| s_plugins                   |
+| s_power                     |
+| s_refund_log                |
+| s_region                    |
+| s_role                      |
+| s_role_power                |
+| s_screening_price           |
+| s_search_history            |
+| s_slide                     |
+| s_user                      |
+| s_user_address              |
+| s_user_integral_log         |
+| s_warehouse                 |
+| s_warehouse_goods           |
+| s_warehouse_goods_spec      |
+
+#+RESULTS: 显示数据库
+|---|
+
+
+#+name: check
+#+BEGIN_SRC sql
+  describe s_warehouse_goods;
+  describe s_goods;
+#+END_SRC
+
+#+RESULTS: check
+| Field                  | Type                   | Null | Key | Default | Extra          |
+|------------------------+------------------------+------+-----+---------+----------------|
+| id                     | int(11) unsigned       | NO   | PRI |    NULL | auto_increment |
+| warehouse_id           | int(11) unsigned       | NO   | MUL |       0 |                |
+| goods_id               | int(11) unsigned       | NO   | MUL |       0 |                |
+| is_enable              | tinyint(1) unsigned    | NO   | MUL |       1 |                |
+| inventory              | int(10) unsigned       | NO   | MUL |       0 |                |
+| add_time               | int(11) unsigned       | NO   |     |       0 |                |
+| upd_time               | int(11) unsigned       | NO   |     |       0 |                |
+| Field                  | Type                   | Null | Key | Default | Extra          |
+| id                     | int(11) unsigned       | NO   | PRI |    NULL | auto_increment |
+| brand_id               | int(11) unsigned       | YES  |     |       0 |                |
+| site_type              | tinyint(1)             | NO   |     |      -1 |                |
+| title                  | char(60)               | NO   | MUL |         |                |
+| title_color            | char(7)                | NO   |     |         |                |
+| simple_desc            | char(160)              | NO   |     |         |                |
+| model                  | char(30)               | NO   |     |         |                |
+| place_origin           | int(11) unsigned       | NO   |     |       0 |                |
+| inventory              | int(11) unsigned       | NO   |     |       0 |                |
+| inventory_unit         | char(15)               | NO   |     |         |                |
+| images                 | char(255)              | NO   |     |         |                |
+| original_price         | char(60)               | NO   |     |         |                |
+| min_original_price     | decimal(10,2) unsigned | NO   |     |    0.00 |                |
+| max_original_price     | decimal(10,2) unsigned | NO   |     |    0.00 |                |
+| price                  | char(60)               | NO   |     |         |                |
+| min_price              | decimal(10,2) unsigned | NO   |     |    0.00 |                |
+| max_price              | decimal(10,2) unsigned | NO   |     |    0.00 |                |
+| give_integral          | int(6) unsigned        | NO   |     |       0 |                |
+| buy_min_number         | int(11) unsigned       | NO   |     |       1 |                |
+| buy_max_number         | int(11) unsigned       | NO   |     |       0 |                |
+| is_deduction_inventory | tinyint(2) unsigned    | NO   |     |       1 |                |
+| is_shelves             | tinyint(2) unsigned    | NO   | MUL |       1 |                |
+| is_home_recommended    | tinyint(2) unsigned    | NO   |     |       0 |                |
+| content_web            | mediumtext             | YES  |     |    NULL |                |
+| photo_count            | tinyint(3) unsigned    | NO   | MUL |       0 |                |
+| sales_count            | int(11) unsigned       | NO   |     |       0 |                |
+| access_count           | int(11) unsigned       | NO   | MUL |       0 |                |
+| video                  | char(255)              | NO   |     |         |                |
+| is_exist_many_spec     | tinyint(1) unsigned    | NO   |     |       0 |                |
+| spec_base              | text                   | YES  |     |    NULL |                |
+| fictitious_goods_value | text                   | YES  |     |    NULL |                |
+| seo_title              | char(100)              | NO   |     |         |                |
+| seo_keywords           | char(130)              | NO   |     |         |                |
+| seo_desc               | char(230)              | NO   |     |         |                |
+| is_delete_time         | int(11) unsigned       | NO   |     |       0 |                |
+| add_time               | int(11) unsigned       | NO   |     |       0 |                |
+| upd_time               | int(11) unsigned       | NO   |     |       0 |                |
+
+*** 用户
+#+name: 用户表定义
+#+BEGIN_SRC sql
+describe tp_users;
+#+END_SRC
+
+
+#+name: 查询用户
+#+BEGIN_SRC sql
+select user_id,password,mobile,token,nickname,reg_time, distribut_level, platform , invite_code
+from tp_users where nickname like '刘文%' order by user_id desc limit 0,15 ;
+#+END_SRC
+
+
+#+name: 按邀请查询用户
+#+BEGIN_SRC sql
+select user_id,nickname,first_leader,second_leader,third_leader from  tp_users where is_distribut=1
+#+END_SRC
+
+
+#+name: 删除用户
+#+BEGIN_SRC sql
+delete from tp_users where user_id = 110195
+#+END_SRC
+
+
+** product
+*** query
+#+name: spec
+#+BEGIN_SRC sql
+    set names utf8;
+  select * from s_goods_spec_base;
+       
+#+END_SRC
+
+#+RESULTS: spec
+|  id | goods_id |   price | inventory | weight | coding | barcode | original_price | extends                                               |                                                 add_time |            |                                             |            |            |
+|-----+----------+---------+-----------+--------+--------+---------+----------------+-------------------------------------------------------+----------------------------------------------------------+------------+---------------------------------------------+------------+------------|
+|  21 |        3 | 3888.00 |         0 |   0.00 |        |         |        6866.00 | NULL                                                  |                                               1547452007 |            |                                             |            |            |
+|  22 |        4 | 1999.00 |         0 |   0.00 |        |         |        2300.00 | NULL                                                  |                                               1547452553 |            |                                             |            |            |
+|  23 |        5 | 2499.00 |         0 |   0.00 |        |         |        3200.00 | NULL                                                  |                                               1547452798 |            |                                             |            |            |
+| 155 |        7 |  168.00 |        11 |   0.00 |        |         |         760.00 | NULL                                                  |                                               1554485498 |            |                                             |            |            |
+| 626 |        1 | 2100.00 |        24 |   0.00 |        |         |        3200.00 | NULL                                                  |                                               1574168666 |            |                                             |            |            |
+| 725 |        8 |  356.00 |         2 |   0.00 |        |         |           0.00 | NULL                                                  |                                               1584869425 |            |                                             |            |            |
+| 813 |       11 |  258.00 |         0 |   0.00 |        |         |         268.00 | {"plugins_distribution_rules_1":"r                    |                                                    5\\nr | 3\\ns      | 2","plugins_distribution_down_rules_1":"r   | 10"}       | 1593703443 |
+| 814 |       11 |  238.00 |         0 |   0.00 |        |         |         343.00 | {"plugins_distribution_rules_1":"r                    |                                                    5\\nr | 3\\ns      | 2","plugins_distribution_down_rules_1":"r   | 1"}        | 1593703443 |
+| 815 |       11 |  160.00 |         0 |   0.00 |        |         |         422.00 | {"plugins_distribution_rules_20191202164330784159":"r | 8","plugins_distribution_rules_20191204113948916981":""} | 1593703443 |                                             |            |            |
+| 822 |        9 |  120.00 |         0 |   0.30 |        |         |         160.00 | NULL                                                  |                                               1593763314 |            |                                             |            |            |
+| 823 |        9 |  120.00 |         0 |   0.30 |        |         |         160.00 | NULL                                                  |                                               1593763314 |            |                                             |            |            |
+| 824 |        9 |  120.00 |         0 |   0.30 |        |         |         160.00 | NULL                                                  |                                               1593763314 |            |                                             |            |            |
+| 825 |        9 |  120.00 |         0 |   0.30 |        |         |         160.00 | NULL                                                  |                                               1593763314 |            |                                             |            |            |
+| 826 |        9 |  136.00 |         0 |   0.30 |        |         |         188.00 | NULL                                                  |                                               1593763314 |            |                                             |            |            |
+| 827 |        9 |  136.00 |         0 |   0.30 |        |         |         188.00 | NULL                                                  |                                               1593763314 |            |                                             |            |            |
+| 828 |        9 |  136.00 |         0 |   0.30 |        |         |         188.00 | NULL                                                  |                                               1593763314 |            |                                             |            |            |
+| 829 |        9 |  158.00 |         0 |   0.30 |        |         |         216.00 | NULL                                                  |                                               1593763314 |            |                                             |            |            |
+| 830 |        9 |  158.00 |         0 |   0.30 |        |         |         216.00 | NULL                                                  |                                               1593763314 |            |                                             |            |            |
+| 854 |       10 |  228.00 |         0 |   0.00 |        |         |         568.00 | NULL                                                  |                                               1594905899 |            |                                             |            |            |
+| 900 |        2 | 6050.00 |        10 |  12.00 |        |         |        6800.00 | NULL                                                  |                                               1594914115 |            |                                             |            |            |
+| 901 |        2 | 6600.00 |        20 |  21.00 |        |         |        7200.00 | NULL                                                  |                                               1594914115 |            |                                             |            |            |
+| 902 |        2 | 6800.00 |        33 |  22.00 |        |         |        7600.00 | NULL                                                  |                                               1594914115 |            |                                             |            |            |
+| 903 |        2 | 6050.00 |        44 |  23.00 |        |         |        6800.00 | NULL                                                  |                                               1594914115 |            |                                             |            |            |
+| 904 |        2 | 6600.00 |         0 |  12.00 |        |         |        7200.00 | NULL                                                  |                                               1594914115 |            |                                             |            |            |
+| 905 |        2 | 6800.00 |         0 |  32.00 |        |         |        7600.00 | NULL                                                  |                                               1594914115 |            |                                             |            |            |
+| 906 |        2 | 4500.00 |         0 |  23.00 |        |         |        6800.00 | NULL                                                  |                                               1594914115 |            |                                             |            |            |
+| 907 |        2 | 4800.00 |         0 |  32.00 |        |         |        6600.00 | NULL                                                  |                                               1594914115 |            |                                             |            |            |
+| 908 |        2 | 5500.00 |         0 |  11.00 |        |         |        6000.00 | NULL                                                  |                                               1594914115 |            |                                             |            |            |
+| 909 |        6 | 2998.90 |         0 |   0.00 |        |         |        3200.00 | {"plugins_distribution_rules_1":"r                    |                                                   10\\nr | 10\\nr     | 10","plugins_distribution_down_rules_1":""} | 1594957734 |            |
+| 910 |       12 |    0.01 |         5 |   0.50 | gg11   | txm11   |         188.00 | NULL                                                  |                                               1596084313 |            |                                             |            |            |
+| 911 |       12 |    0.01 |         5 |   0.50 | gg11   | txm11   |         188.00 | NULL                                                  |                                               1596084313 |            |                                             |            |            |
+| 912 |       12 |    0.01 |         5 |   0.50 | gg11   | txm11   |         188.00 | NULL                                                  |                                               1596084313 |            |                                             |            |            |
+| 913 |       12 |    0.01 |         5 |   0.50 | gg11   | txm11   |         188.00 | NULL                                                  |                                               1596084313 |            |                                             |            |            |
+| 914 |       12 |    0.01 |         5 |   0.50 | gg11   | txm11   |         188.00 | NULL                                                  |                                               1596084313 |            |                                             |            |            |
+| 915 |       12 |    0.01 |         5 |   0.50 | gg11   | txm11   |         188.00 | NULL                                                  |                                               1596084313 |            |                                             |            |            |
+| 916 |   202737 |    9.00 |         0 |   9.00 | 111    | 111     |           9.00 | NULL                                                  |                                               1601565556 |            |                                             |            |            |
+| 919 |   210787 |    8.00 |         0 |   1.00 |        |         |           0.00 | NULL                                                  |                                               1601566207 |            |                                             |            |            |
+
+#+name: brand
+#+BEGIN_SRC sql
+    set names utf8;
+  select * from s_brand limit 0,5;
+    select * from s_goods_content_app;
+#+END_SRC
+
+#+RESULTS: brand
+|  id |                                                         logo | name                                                        | website_url                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  | is_enable |       sort | seo_title | seo_keywords | seo_desc |   add_time |   upd_time |
+|-----+--------------------------------------------------------------+-------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-----------+------------+-----------+--------------+----------+------------+------------|
+|   1 | /static/upload/images/brand/2019/02/25/1551064260180298.jpeg | 强生                                                        | https://www.johnsonsbaby.com.cn/                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |         1 |          0 |           |              |          | 1551064263 | 1596291144 |
+|   2 | /static/upload/images/brand/2019/02/25/1551064277207182.jpeg | 佳洁士                                                      |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |         1 |          0 |           |              |          | 1551064299 |          0 |
+| 513 |                                                              |                                                             |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |         1 |          0 |           |              |          |          0 |          0 |
+| 551 |                                                              | 海普                                                        |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |         1 |          0 |           |              |          |          0 |          0 |
+| 552 |                                                              | 罗欣                                                        |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |         1 |          0 |           |              |          |          0 |          0 |
+|  id |                                                     goods_id | images                                                      | content                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |      sort |   add_time |           |              |          |            |            |
+|  10 |                                                            3 | /static/upload/images/goods/2019/01/14/1547451947383902.jpg |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |         0 | 1547452007 |           |              |          |            |            |
+|  11 |                                                            3 | /static/upload/images/goods/2019/01/14/1547451947686990.jpg |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |         1 | 1547452007 |           |              |          |            |            |
+|  12 |                                                            3 | /static/upload/images/goods/2019/01/14/1547451947676180.jpg |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |         2 | 1547452007 |           |              |          |            |            |
+|  13 |                                                            3 | /static/upload/images/goods/2019/01/14/1547451947791154.jpg |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |         3 | 1547452007 |           |              |          |            |            |
+|  14 |                                                            4 | /static/upload/images/goods/2019/01/14/1547452505568604.jpg |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |         0 | 1547452553 |           |              |          |            |            |
+|  15 |                                                            4 | /static/upload/images/goods/2019/01/14/1547452505349986.jpg |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |         1 | 1547452553 |           |              |          |            |            |
+|  16 |                                                            4 | /static/upload/images/goods/2019/01/14/1547452505184884.jpg |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |         2 | 1547452553 |           |              |          |            |            |
+|  17 |                                                            5 | /static/upload/images/goods/2019/01/14/1547452760417982.jpg |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |         0 | 1547452798 |           |              |          |            |            |
+|  18 |                                                            5 | /static/upload/images/goods/2019/01/14/1547452760984656.jpg |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |         1 | 1547452798 |           |              |          |            |            |
+|  19 |                                                            5 | /static/upload/images/goods/2019/01/14/1547452760659259.jpg |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |         2 | 1547452798 |           |              |          |            |            |
+| 135 |                                                            7 | /static/upload/images/goods/2019/01/14/1547453910353340.jpg |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |         0 | 1554485498 |           |              |          |            |            |
+| 136 |                                                            7 | /static/upload/images/goods/2019/01/14/1547453910505349.jpg |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |         1 | 1554485498 |           |              |          |            |            |
+| 137 |                                                            7 | /static/upload/images/goods/2019/01/14/1547453910394886.jpg |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |         2 | 1554485498 |           |              |          |            |            |
+| 507 |                                                            1 | /static/upload/images/goods/2019/01/14/1547450880620837.png |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |         0 | 1574168666 |           |              |          |            |            |
+| 508 |                                                            1 | /static/upload/images/goods/2019/01/14/1547450880750687.png |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |         1 | 1574168666 |           |              |          |            |            |
+| 509 |                                                            1 | /static/upload/images/goods/2019/01/14/1547450880917418.png |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |         2 | 1574168666 |           |              |          |            |            |
+| 609 |                                                            8 | /static/upload/images/goods/2019/01/14/1547454192301566.jpg |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |         0 | 1584869425 |           |              |          |            |            |
+| 610 |                                                            8 | /static/upload/images/goods/2019/01/14/1547454192448116.jpg |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |         1 | 1584869425 |           |              |          |            |            |
+| 611 |                                                            8 | /static/upload/images/goods/2019/01/14/1547454192474638.jpg |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |         2 | 1584869425 |           |              |          |            |            |
+| 675 |                                                           11 | /static/upload/images/goods/2019/01/14/1547455601314107.jpg | 【品牌】欧单 学媛风 猫咪良品\n\n【吊牌】xueyuanfeng 猫咪良品\n\n【面料质地】网纱绣花钉珠拼接蕾丝 有拉链有内衬（非专业机构鉴定，介意请慎拍）\n\n好的衣服需要好好呵护，务必请冷水手洗(切记别浸泡)拧干就晾晒或则干洗哦~\n\n【商品颜色】实物拍摄 香槟色 颜色很难拍有小色差属正常现象哦\n\n【商品尺寸】XS/S/M/L 小高腰设计 胸那考虑撑开因素哦 微弹的哦\n\n\nXS码尺寸: 衣长82CM.胸围80内合适.腰围63CM.臀围86CM\n\nS码尺寸: 衣长83CM.胸围84内合适.腰围67CM.臀围90CM\n\nM码尺寸: 衣长84CM.胸围88内合适.腰围71CM.臀围94CM\n\nL码尺寸: 衣长85CM.胸围92内合适.腰围75CM.臀围98CM\n\n\n（测量单位是CM，每个人的测量方式不一样，测量的尺寸数据可能会有1~3厘米的差异，请MM们谅解哦）\n\n\nPS：常规码数，可按平时号选择哦。修身版型，如果腰粗可以适当考虑大1号哦~\n\n大圆领，每个人的身材曲线不同，领口不会很平的哦，请谅解~\n\n肩膀那有暗扣哦，可以很好的隐藏了内衣的肩带哦~袖子那略硬哦~   |         0 | 1593703443 |           |              |          |            |            |
+| 676 |                                                           11 | /static/upload/images/goods/2019/01/14/1547455601168384.jpg |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |         1 | 1593703443 |           |              |          |            |            |
+| 677 |                                                           11 | /static/upload/images/goods/2019/01/14/1547455601898622.jpg |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |         2 | 1593703443 |           |              |          |            |            |
+| 678 |                                                           11 | /static/upload/images/goods/2019/01/14/1547455601528614.jpg |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |         3 | 1593703443 |           |              |          |            |            |
+| 691 |                                                            9 | /static/upload/images/goods/2019/01/14/1547454712270511.jpg |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |         0 | 1593763314 |           |              |          |            |            |
+| 692 |                                                            9 | /static/upload/images/goods/2019/01/14/1547454713556301.jpg |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |         1 | 1593763314 |           |              |          |            |            |
+| 693 |                                                            9 | /static/upload/images/goods/2019/01/14/1547454713800333.jpg |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |         2 | 1593763314 |           |              |          |            |            |
+| 694 |                                                            9 | /static/upload/images/goods/2019/01/14/1547454713456602.jpg |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |         3 | 1593763314 |           |              |          |            |            |
+| 717 |                                                           10 | /static/upload/images/goods/2019/01/14/1547455266527628.jpg | 【品牌】欧单 学媛风 猫咪良品\n\n【吊牌】xueyuanfeng 猫咪良品\n\n【面料质地】涤棉拼接蕾丝  后中拉链 有内衬（非专业机构鉴定，介意请慎拍）\n\n好的衣服需要好好呵护，务必请冷水手洗(切记别浸泡)拧干就晾晒或则干洗哦~\n\n【商品颜色】实物拍摄 蓝色 颜色很难拍有小色差属正常现象哦\n\n【商品尺寸】XS/S/M/L 小高腰设计 胸口纽扣是装饰的哦\n\n\nXS码尺寸: 悬挂衣长81CM.胸围80内合适.腰围63CM.臀围86CM\n\nS码尺寸: 悬挂衣长82CM.胸围84内合适.腰围67CM.臀围90CM\n\nM码尺寸: 悬挂衣长83CM.胸围88内合适.腰围71CM.臀围94CM\n\nL码尺寸: 悬挂衣长84CM.胸围92内合适.腰围75CM.臀围98CM\n\n\n（测量单位是CM，每个人的测量方式不一样，测量的尺寸数据可能会有1~3厘米的差异，请MM们谅解哦）\n\n\nPS：常规码数，可按平时号选择哦。修身版型~如果上身偏大可以适当考虑大1号~下摆蕾丝拼接不会很平整的哦~\n\n蕾丝花是手工修剪出来的，每件都有不同和不规则的哦，有小线头和节点是正常现象哦~请亲们谅解哦~ |         0 | 1594905899 |           |              |          |            |            |
+| 718 |                                                           10 | /static/upload/images/goods/2019/01/14/1547455266234658.jpg |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |         1 | 1594905899 |           |              |          |            |            |
+| 734 |                                                            2 | /static/upload/images/goods/2019/01/14/1547451595700972.jpg |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |         0 | 1594914115 |           |              |          |            |            |
+| 735 |                                                            2 | /static/upload/images/goods/2019/01/14/1547451595528800.jpg |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |         1 | 1594914115 |           |              |          |            |            |
+| 736 |                                                            2 | /static/upload/images/goods/2019/01/14/1547451595616298.jpg |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |         2 | 1594914115 |           |              |          |            |            |
+| 737 |                                                            6 | /static/upload/images/goods/2019/01/14/1547453042405182.jpg | X5L/SL/V/M (5.0寸)  X5max钢化膜(5.5寸)  X5pro钢化膜(5.2寸)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |         0 | 1594957734 |           |              |          |            |            |
+| 738 |                                                            6 | /static/upload/images/goods/2019/01/14/1547453042614480.jpg |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |         1 | 1594957734 |           |              |          |            |            |
+| 739 |                                                            6 | /static/upload/images/goods/2019/01/14/1547453042816509.jpg |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |         2 | 1594957734 |           |              |          |            |            |
+| 740 |                                                           12 | /static/upload/images/goods/2019/01/14/1547456214155362.jpg |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |         0 | 1596084313 |           |              |          |            |            |
+| 741 |                                                           12 | /static/upload/images/goods/2019/01/14/1547455907486857.jpg |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |         1 | 1596084313 |           |              |          |            |            |
+| 742 |                                                           12 | /static/upload/images/goods/2019/01/14/1547455907256518.jpg |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |         2 | 1596084313 |           |              |          |            |            |
+| 743 |                                                           12 | /static/upload/images/goods/2019/01/14/1547456228913731.jpg |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |         3 | 1596084313 |           |              |          |            |            |
+
+#+name: proquery
+#+BEGIN_SRC sql
+  set names utf8;
+  select count(*) from s_goods;
+  select count(*) from s_goods_photo;
+  select count(*) from s_goods_content_app;
+  select id,title, model, images from s_goods where id > 10 order by id limit 0, 3;
+       select id,brand_name,general_name from medicine limit 0,3;
+     select * from s_goods_photo where goods_id = 6 limit 0,3;
+#+END_SRC
+
+#+RESULTS: proquery
+| count(*) |                                                              |                                                             |                                                             |      |            |
+|----------+--------------------------------------------------------------+-------------------------------------------------------------+-------------------------------------------------------------+------+------------|
+|     1917 |                                                              |                                                             |                                                             |      |            |
+| count(*) |                                                              |                                                             |                                                             |      |            |
+|     4261 |                                                              |                                                             |                                                             |      |            |
+| count(*) |                                                              |                                                             |                                                             |      |            |
+|      349 |                                                              |                                                             |                                                             |      |            |
+|       id | title                                                        | model                                                       | images                                                      |      |            |
+|       11 | 夏季复古ins风格网红SP同款 短袖大圆领香槟色蕾丝绣花钉珠连衣裙 |                                                             | /static/upload/images/goods/2019/01/14/1547455566118614.jpg |      |            |
+|       12 | ZK星星绣花雪纺连衣裙中长款sukol裙少女心温柔超仙女chic裙子夏  | xxxxhhhhhh商品型号                                          | /static/upload/images/goods/2019/01/14/1547455890402147.jpg |      |            |
+|       15 | 雨田青                                                       |                                                             | /static/products/4/15/201905091533137846.jpeg               |      |            |
+|       id | brand_name                                                   | general_name                                                |                                                             |      |            |
+|       15 | 雨田青                                                       | 雷贝拉唑钠肠溶胶囊                                          |                                                             |      |            |
+|       29 | 复生康胶囊                                                   | 复生康胶囊                                                  |                                                             |      |            |
+|       44 | 依托泊苷软胶囊                                               | 依托泊苷软胶囊                                              |                                                             |      |            |
+|       id | goods_id                                                     | images                                                      | is_show                                                     | sort |   add_time |
+|      581 | 6                                                            | /static/upload/images/goods/2019/01/14/1547453000703308.jpg | 1                                                           |    0 | 1594957734 |
+|      582 | 6                                                            | /static/upload/images/goods/2019/01/14/1547453032949003.jpg | 1                                                           |    1 | 1594957734 |
+
+
+#+name: empty drugs
+#+BEGIN_SRC sql
+    describe medicine;
+  alter table medicine modify column overdose varchar(2000) null ;
+  delete from s_goods where id > 12;
+       delete from s_goods_photo where goods_id > 12;
+     delete from s_goods_content_app where goods_id > 12;
+       delete from medicine;
+#+END_SRC
+
+#+RESULTS: empty drugs
+| Field                  | Type             | Null | Key | Default | Extra          |
+|------------------------+------------------+------+-----+---------+----------------|
+| id                     | int(11) unsigned | NO   | PRI | NULL    | auto_increment |
+| price                  | decimal(10,2)    | YES  |     | NULL    |                |
+| english_name           | varchar(255)     | YES  |     | NULL    |                |
+| general_name           | varchar(255)     | NO   |     | NULL    |                |
+| brand_name             | varchar(255)     | NO   |     | NULL    |                |
+| brand                  | varchar(255)     | NO   |     | NULL    |                |
+| type                   | varchar(255)     | NO   |     | NULL    |                |
+| classification         | varchar(255)     | NO   |     | NULL    |                |
+| approval_number        | varchar(255)     | NO   |     | NULL    |                |
+| standard_code          | varchar(255)     | YES  |     | NULL    |                |
+| ingredient             | varchar(255)     | YES  |     | NULL    |                |
+| character              | varchar(255)     | YES  |     | NULL    |                |
+| function               | text             | YES  |     | NULL    |                |
+| usage                  | varchar(2000)    | YES  |     | NULL    |                |
+| specification          | varchar(255)     | YES  |     | NULL    |                |
+| dosage_form            | varchar(255)     | YES  |     | NULL    |                |
+| sideaffect             | text             | YES  |     | NULL    |                |
+| contraindication       | text             | YES  |     | NULL    |                |
+| announcement           | varchar(2000)    | YES  |     | NULL    |                |
+| pregnant               | varchar(255)     | YES  |     | NULL    |                |
+| child                  | varchar(255)     | YES  |     | NULL    |                |
+| elder                  | varchar(255)     | YES  |     | NULL    |                |
+| interaction            | text             | YES  |     | NULL    |                |
+| overdose               | varchar(2000)    | YES  |     | NULL    |                |
+| pharmacological_action | text             | YES  |     | NULL    |                |
+| pharmacokinetics       | text             | YES  |     | NULL    |                |
+| external               | varchar(255)     | YES  |     | NULL    |                |
+| storage                | varchar(255)     | YES  |     | NULL    |                |
+| packaging              | varchar(255)     | YES  |     | NULL    |                |
+| valid_date             | varchar(255)     | YES  |     | NULL    |                |
+| standard               | varchar(255)     | YES  |     | NULL    |                |
+| diseases               | varchar(255)     | YES  |     | NULL    |                |
+| region                 | varchar(255)     | NO   |     | NULL    |                |
+| company                | varchar(255)     | NO   |     | NULL    |                |
+| production_address     | varchar(255)     | YES  |     | NULL    |                |
+| insurance              | varchar(255)     | YES  |     | NULL    |                |
+| version                | int(11)          | NO   |     | 0       |                |
+| c_time                 | int(11) unsigned | NO   |     | 0       |                |
+
+#+name: medicine check
+#+BEGIN_SRC sql
+    set names utf8;
+  select * from medicine where length(function) > 0 limit 0,3;    
+#+END_SRC
+
+#+RESULTS: medicine check
+|---|
 
 ** 系统
 
