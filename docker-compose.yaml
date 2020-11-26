@@ -47,6 +47,13 @@ services:
   ### Application Code Container
   application:
     build: ./build/application
+  workspace:
+    build: ./build/workspace
+    volumes:
+      - ${SRC_PATH}:${DEST_PATH}
+    links:
+      - mysql
+      - redis
 
   mysql-cron-backup:
     image: fradelg/mysql-cron-backup
@@ -63,15 +70,6 @@ services:
       # Every day at 03:00
       - CRON_TIME=0 3 * * *
     restart: unless-stopped 
-
-  ### Workspace Utilities Container
-  workspace:
-    build: ./build/workspace
-    volumes:
-      - ${SRC_PATH}:${DEST_PATH}
-    links:
-      - mysql
-    tty: true
 
 volumes:
   src:

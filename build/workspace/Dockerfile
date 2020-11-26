@@ -1,14 +1,12 @@
-FROM phusion/baseimage:latest
+FROM laradock/workspace:latest-7.4
 
-MAINTAINER Paulo Dias <prbdias@gmail.com>
-
-RUN DEBIAN_FRONTEND=noninteractive
-RUN locale-gen en_US.UTF-8
+MAINTAINER Qun Wang <tshwangq@gmail.com>
 COPY . .
 RUN cat  /etc/apt/sources.list
 RUN mv /etc/apt/sources.list /etc/apt/sources.list.bak && mv sources.list /etc/apt/
 RUN cat  /etc/apt/sources.list
-
+RUN DEBIAN_FRONTEND=noninteractive
+RUN locale-gen en_US.UTF-8
 RUN apt-get update && apt-get install -y tzdata
 
 ENV LANGUAGE=en_US.UTF-8
@@ -20,43 +18,10 @@ ENV TERM xterm
 # Install "software-properties-common" (for the "add-apt-repository")
 RUN apt-get update && apt-get install -y \
     software-properties-common
-
-# Add the "PHP 7" ppa
-RUN add-apt-repository -y \
-    ppa:ondrej/php
-
-# Install PHP-CLI 7.3, some PHP extentions and some useful Tools with APT
-RUN apt-get update && apt-get install -y --force-yes \
-        php7.3-cli \
-        php7.3-common \
-        php7.3-curl \
-        php7.3-json \
-        php7.3-xml \
-        php7.3-mbstring \
-#        php7.3-mcrypt \
-        php7.3-mysql \
-        php7.3-zip \
-        php7.3-gd \
-        php-memcached \
-        php-xdebug \
-        git \
-        curl \
-        nano \
-        iputils-ping \
-        zip \
-        unzip
-
-
+RUN apt-get install -y mysql-client
 # Clean up, to free some space
 RUN apt-get clean
 
-# Add an alias for PHPUnit
-RUN echo "alias phpunit='./vendor/bin/phpunit'" >> ~/.bashrc
-
-# Install Composer
-RUN curl -s http://getcomposer.org/installer | php \
-    && mv composer.phar /usr/local/bin/ \
-    && echo "alias composer='/usr/local/bin/composer.phar'" >> ~/.bashrc
 
 # Source the bash
 RUN . ~/.bashrc
